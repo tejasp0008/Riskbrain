@@ -1,0 +1,37 @@
+# RiskBrain pinned dependencies
+# Versions checked against PyPI on 2026-09-01 (Phase 0), numpy re-checked
+# 2026-09-02 after a Python 3.13 install failure. Re-check before bumping;
+# do not assume newer versions work without re-validating the build order
+# in CLAUDE.md.
+#
+# NOTE: xgboost>=3.4.1 requires Python >=3.12. Use a Python 3.12+ venv.
+# NOTE: numpy is pinned to 2.5.2 (not <2.0) because numpy's 1.x series has
+# no Python 3.13 wheel at all (max is cp312), which breaks installs on
+# newer interpreters. No other pinned package here caps numpy's upper
+# bound, and numpy has held a stable C-ABI since 2.0.
+
+# --- Inline serving path ---
+vllm==0.28.0
+transformers==5.16.1
+bitsandbytes==0.50.2
+fastapi==0.141.1
+uvicorn[standard]==0.34.0
+
+# --- Fine-tuning ---
+peft==0.20.0
+
+# --- Tabular fraud model ---
+xgboost==3.4.1
+
+# --- Retrieval ---
+faiss-cpu==1.15.0
+sentence-transformers==6.0.1
+
+# --- Calibration / fusion ---
+scikit-learn==1.5.2
+numpy==2.5.2
+pandas==2.2.3
+matplotlib==3.11.1
+
+# --- Observability ---
+sqlalchemy==2.0.36

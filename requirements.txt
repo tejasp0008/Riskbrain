@@ -9,12 +9,15 @@
 # no Python 3.13 wheel at all (max is cp312), which breaks installs on
 # newer interpreters. No other pinned package here caps numpy's upper
 # bound, and numpy has held a stable C-ABI since 2.0.
+# NOTE: fastapi is pinned to 0.136.3, not current stable, because
+# vllm==0.28.0 requires fastapi<0.137.0,>=0.133.0. Re-check this bound
+# whenever vllm is bumped.
 
 # --- Inline serving path ---
 vllm==0.28.0
 transformers==5.16.1
 bitsandbytes==0.50.2
-fastapi==0.141.1
+fastapi==0.136.3
 uvicorn[standard]==0.34.0
 
 # --- Fine-tuning ---

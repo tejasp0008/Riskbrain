@@ -5,13 +5,16 @@
 # in CLAUDE.md.
 #
 # NOTE: xgboost>=3.4.1 requires Python >=3.12. Use a Python 3.12+ venv.
-# NOTE: numpy is pinned to 2.5.2 (not <2.0) because numpy's 1.x series has
-# no Python 3.13 wheel at all (max is cp312), which breaks installs on
-# newer interpreters. No other pinned package here caps numpy's upper
-# bound, and numpy has held a stable C-ABI since 2.0.
-# NOTE: fastapi is pinned to 0.136.3, not current stable, because
-# vllm==0.28.0 requires fastapi<0.137.0,>=0.133.0. Re-check this bound
-# whenever vllm is bumped.
+# NOTE: several pins below are NOT current stable, because vllm==0.28.0
+# constrains them transitively. Re-check all three whenever vllm is bumped.
+#   numpy==2.4.6      vllm hard-pins numba==0.65.0, which requires
+#                     numpy<2.5,>=1.22. The lower end matters too: numpy
+#                     1.x has no Python 3.13 wheel (max is cp312), so the
+#                     usable window on 3.13 is 2.1 through 2.4.x. 2.4.6 is
+#                     the newest release satisfying both.
+#   fastapi==0.136.3  vllm requires fastapi[standard]<0.137.0,>=0.133.0.
+#   torch (unpinned)  vllm hard-pins torch==2.13.0 and its CUDA 13 stack;
+#                     do not pin torch here or it will fight vllm.
 
 # --- Inline serving path ---
 vllm==0.28.0
@@ -32,7 +35,7 @@ sentence-transformers==6.0.1
 
 # --- Calibration / fusion ---
 scikit-learn==1.5.2
-numpy==2.5.2
+numpy==2.4.6
 pandas==2.2.3
 matplotlib==3.11.1
 
